@@ -7,11 +7,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var transactions []transaction
+
 func Addtransactions(ctx *gin.Context) {
-	transaction := transaction{}
-	json.NewDecoder(ctx.Request.Body).Decode(&transaction)
-	if isExpired(transaction) {
-		ctx.JSON(http.StatusUnprocessableEntity, nil)
+	if err := json.NewDecoder(ctx.Request.Body).Decode(&transactions); err != nil {
+		ctx.JSON(http.StatusBadRequest, nil)
+		return
 	}
-	ctx.JSON(http.StatusCreated, transaction)
+	if isInFuture(transactions[0]) {
+		ctx.JSON(http.StatusUnprocessableEntity, nil)
+	} else if isExpired(transactions) {
+		ctx.JSON(http.StatusNoContent, nil)
+	}
+	// transactions = append(transactions, transaction)
+	ctx.JSON(http.StatusCreated, transactions)
+
+}
+
+func GetStatistics(ctx *gin.Context) {
+
+}
+
+func Deletetransactions(ctx *gin.Context) {
+	transactions = []transaction{}
+	ctx.JSON(http.StatusNoContent, nil)
 }

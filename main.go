@@ -13,7 +13,7 @@ func main() {
 
 	// router.PUT("/update-status/:O_id", controllers.UpdateStatus)
 
-	// router.GET("/GetOrdersonstatus/:status", controllers.GetOrdersonstatus)
+	router.GET("/statistics", controllers.GetStatistics)
 
 	// router.GET("/GetOrdersById/:O_id", controllers.GetOrdersById)
 
