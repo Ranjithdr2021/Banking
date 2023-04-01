@@ -21,7 +21,6 @@ func Addtransactions(ctx *gin.Context) {
 	}
 	// transactions = append(transactions, transaction)
 	ctx.JSON(http.StatusCreated, transactions)
-
 }
 
 func GetStatistics(ctx *gin.Context) {
@@ -31,4 +30,8 @@ func GetStatistics(ctx *gin.Context) {
 func Deletetransactions(ctx *gin.Context) {
 	transactions = []transaction{}
 	ctx.JSON(http.StatusNoContent, nil)
+}
+
+func AddLocation(ctx *gin.Context) {
+
 }
