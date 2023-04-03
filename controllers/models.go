@@ -12,6 +12,9 @@ type location struct {
 	City string `json:"city"`
 }
 
+type reset struct {
+	Reset bool
+}
 type statistics struct {
 	Sum   string `json:"sum"`
 	Avg   string `json:"avg"`

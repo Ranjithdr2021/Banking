@@ -12,10 +12,11 @@ var (
 	transact     transaction
 	Transactions []transaction
 	locate       location
+	res          reset
 )
 
 func Addtransactions(ctx *gin.Context) {
-	if locate.City != "" {
+	if res.Reset == true || locate.City != "" {
 		if err := json.NewDecoder(ctx.Request.Body).Decode(&transact); err != nil {
 			ctx.JSON(http.StatusBadRequest, err)
 			log.Fatal(err)
@@ -27,7 +28,7 @@ func Addtransactions(ctx *gin.Context) {
 			ctx.JSON(http.StatusNoContent, nil)
 		} else {
 			Transactions = append(Transactions, transact)
-			ctx.JSON(http.StatusCreated, Transactions)
+			ctx.JSON(http.StatusCreated, "SUCCESS")
 		}
 	} else {
 		ctx.JSON(http.StatusUnauthorized, nil)
@@ -37,7 +38,7 @@ func Addtransactions(ctx *gin.Context) {
 
 // GetStatistics will provide statistics
 func GetStatistics(ctx *gin.Context) {
-	if locate.City != "" {
+	if res.Reset == true || locate.City != "" {
 		translastsix := []transaction{}
 		for _, v := range Transactions {
 			if !isExpired(v) {
@@ -57,7 +58,7 @@ func GetStatistics(ctx *gin.Context) {
 }
 
 func Deletetransactions(ctx *gin.Context) {
-	if locate.City != "" {
+	if res.Reset == true || locate.City != "" {
 		Transactions = []transaction{}
 		ctx.JSON(http.StatusNoContent, nil)
 	} else {
@@ -71,9 +72,11 @@ func AddLocation(ctx *gin.Context) {
 		log.Fatal(err)
 		return
 	}
+	ctx.JSON(http.StatusOK, "Location added Successfully...")
 }
 
 func ResetLocation(ctx *gin.Context) {
 	locate = location{}
-	ctx.JSON(http.StatusNoContent, nil)
+	res.Reset = true
+	ctx.JSON(http.StatusOK, "location reset Successfull...")
 }
