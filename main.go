@@ -11,13 +11,13 @@ func main() {
 
 	router.POST("/transactions", controllers.Addtransactions)
 
-	// router.PUT("/update-status/:O_id", controllers.UpdateStatus)
+	router.POST("/location", controllers.AddLocation)
 
 	router.GET("/statistics", controllers.GetStatistics)
 
-	// router.GET("/GetOrdersById/:O_id", controllers.GetOrdersById)
+	router.DELETE("/transactions", controllers.Deletetransactions)
 
-	// router.GET("/orders", controllers.Orders)
+	router.PUT("/resetLocation", controllers.ResetLocation)
 
 	router.Run("localhost:8000")
 }
